@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 # FIX: Use the modern, active TextLoader package to resolve the DeprecationWarning
 from langchain_core.documents import Document
 from langchain_core.document_loaders.blob_loaders import Blob
+from langchain_community.document_loaders import PyPDFLoader
 
 load_dotenv()
 
@@ -27,5 +28,16 @@ def load_text_file():
     # This list is fully prepared for text splitting or vector storage!
 
 
+def load_pdf_file(pdf_path: str):
+    loader = PyPDFLoader(pdf_path)
+    documents = loader.load()
+    print(f"\nLoaded {len(documents)} documents from PDF file")
+    for i, doc in enumerate(documents):
+        print(f"\n--- Document {i+1} ---")
+        print(f"Page Content:\n{doc.page_content}")
+        print(f"Metadata: {doc.metadata}")
+
+
 if __name__ == "__main__":
     load_text_file()
+    load_pdf_file("docs/Arif_Uz_Zaman_AI_Resume.pdf")

@@ -5,12 +5,13 @@ load_dotenv()
 from langchain_core import __version__ as langchain_core_version
 #from langgraph import __version__ as langgraph_version
 from langchain_google_genai import GoogleGenerativeAI
+from importlib.metadata import version
+
+lg_version = version("langgraph")
 
 
 print(f"Langchain core version: {langchain_core_version}")
-#print(f"Langgraph version: {langgraph_version}")
-#print(f"GoogleGenerativeAI: {GoogleGenerativeAI}")
-
+print(f"Langgraph version: {lg_version}")
 
 def main():
     llm = GoogleGenerativeAI(

@@ -7,7 +7,14 @@ authors = [
     { name = "Arif", email = "arifuzzaman.badhon1@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "langchain>=1.4.2",
+    "langchain-community>=0.4.2",
+    "langchain-core>=1.6.5",
+    "langchain-google-genai>=4.4.0",
+    "langgraph>=1.2.12",
+    "python-dotenv>=1.2.3",
+]
 
 [project.scripts]
 production-rag-langchain = "production_rag_langchain:main"

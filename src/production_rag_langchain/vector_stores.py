@@ -18,12 +18,17 @@ vector_store = Chroma.from_texts(
     persist_directory="./chroma_mini_db"  # Remove this argument to keep it purely in-memory
 )
 
-# 4. Query the vector store
-query = "Tell me about langchain"
-results = vector_store.similarity_search(query, k=1)
+def search_vector_store(query: str, k: int = 1):
+    results = vector_store.similarity_search(query, k=k)
+    result_score = vector_store.similarity_search_with_score(query, k=k)
+    return results, result_score
 
-result_score = vector_store.similarity_search_with_score(query, k=1)
 
-print(f"Results: {results}")
-print(f"Most relevant document: {result_score[0][0].page_content}")
-print(f"Similarity score: {result_score[0][1]}")
+
+if __name__ == "__main__":
+    # 4. Query the vector store
+    results, result_score = search_vector_store("Tell me about langchain")
+
+    print(f"Results: {results}")
+    print(f"Most relevant document: {result_score[0][0].page_content}")
+    print(f"Similarity score: {result_score[0][1]}")

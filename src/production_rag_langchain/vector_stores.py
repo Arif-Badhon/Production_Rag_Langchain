@@ -22,4 +22,8 @@ vector_store = Chroma.from_texts(
 query = "Tell me about langchain"
 results = vector_store.similarity_search(query, k=1)
 
-print(f"Most relevant document: {results[0].page_content}")
+result_score = vector_store.similarity_search_with_score(query, k=1)
+
+print(f"Results: {results}")
+print(f"Most relevant document: {result_score[0][0].page_content}")
+print(f"Similarity score: {result_score[0][1]}")

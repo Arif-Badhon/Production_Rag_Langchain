@@ -1,8 +1,19 @@
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
+def get_embedding_model(model_name: str = "all-MiniLM-L6-v2") -> HuggingFaceEmbeddings:
+    """Load from local cache first; download only if not found locally."""
+    try:
+        return HuggingFaceEmbeddings(
+            model_name=model_name,
+            model_kwargs={"local_files_only": True}
+        )
+    except Exception:
+        print(f"Model '{model_name}' not found locally. Downloading from Hugging Face Hub...")
+        return HuggingFaceEmbeddings(model_name=model_name)
+
 # 1. Initialize the lightweight "mini" embedding model
-embedding_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+embedding_model = get_embedding_model("all-MiniLM-L6-v2")
 
 # 2. Mock documents to store
 texts = [
@@ -27,7 +38,7 @@ def search_vector_store(query: str, k: int = 1):
 
 if __name__ == "__main__":
     # 4. Query the vector store
-    results, result_score = search_vector_store("Tell me about langchain")
+    results, result_score = search_vector_store("Tell me about VectorDB")
 
     print(f"Results: {results}")
     print(f"Most relevant document: {result_score[0][0].page_content}")
